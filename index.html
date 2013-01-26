@@ -1,147 +1,62 @@
+---
+layout: default
+title: Home
+---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Interactive Choropleth Map</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<a href="https://github.com/jeremyi/choropleth"><img style="position: fixed; top: 41px; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Version History:</li>
+        {% for post in site.posts %}
+        <li><a href="{{post.url}}">{{post.title}}</a></li>
+        {% endfor %}
+      </ul>
+    </div><!--/.well -->
+  </div><!--/span-->
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="ico/favicon.png">
-  </head>
-
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Interative Choropleth Map</a>
-          <div class="nav-collapse collapse">
-            <!--<p class="navbar-text pull-right">
-              <a href="http://github.com/jeremyi/choropleth" class="navbar-link">Fork me on Github</a>
-            </p>-->
-            <ul class="nav">
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li class="nav-header">Links to other Choropleths:</li>
-                  <li><a href="http://www.commercialappeal.com/data/gunpermits/"><b class=" icon-screenshot"></b> Commercial Appeal's Gunpermit</a></li>
-                  <!--<li class="divider"></li>-->
-                  <li><a href="http://bl.ocks.org/4060606"><b class="icon-cog"></b> D3 Clean Choropleth (non-interactive)</a></li>
-                  <li><a href="http://bl.ocks.org/2206590"><b class="icon-cog"></b> D3 Clean Choropleth (interactive)</a></li>
-                  <li><a href="http://leafletjs.com/examples/choropleth.html"><b class="icon-leaf"></b> Leaflet</a></li>
-                  <li><a href="http://bost.ocks.org/mike/leaflet/"><b class="icon-cog"></b> + <b class="icon-leaf"></b> D3 + Leaflet</a></li>
-                  <li><a href="https://developers.google.com/chart/interactive/docs/gallery/geochart"><b class="icon-star"></b> Google Developers Geochart</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+  <div class="span9">
+    <div class="hero-unit">
+      <h1>Interactive Choropleth Map</h1>
+      <hr />
+      <p>The purpose of this project is to provide a resource for those who would like to develop or use a professionally designed interactive choropleth map.</p>
+      <hr />
+      <p>This project was spawned from one of the assignments given out at the 3rd <a href="http://phillygivecamp.org/">Philly Give Camp</a>.  <a href="https://github.com/jennvoss/gpcah-map">The original project</a> was the answer to a request from the <a href="http://www.hungercoalition.org/">Coalition Against Hunger</a> to create an interactive choropleth map for the purpose of peoperly displaying information gathered in most comprehensive report on hunger in the state of pennsylvania ever generated.</p>
+      <p>On the drive home from the Philly Give Camp, I got to thinking about all of the improvements that we could do to make this project even better.  By the time I got home, I decided what the project really needed was a complete re-write.</p>
+      <p>And thus, this project was born.</p>
     </div>
-
-    <a href="https://github.com/jeremyi/choropleth"><img style="position: fixed; top: 41px; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Versions:</li>
-              <li><a href="#">Version 1.0</a></li>
-              <li class="nav-header">Testing:</li>
-              <li><a href="#google-maps-version">Google Maps Version</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-          <div class="hero-unit">
-            <h1>Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-          <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-          <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
-
-      <h1 id="google-maps-version">Google Maps Test</h1>
-      <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"chartType":"AreaChart","chartName":"Chart 1","dataSourceUrl":"http://spreadsheets.google.com/tq?key=0AkdPY9vNLVa0dHJXcUNyN19rSndfdGRZNzdRZWlKWnc&transpose=0&headers=1&range=A1%3AD77&gid=0&pub=1","options":{"reverseCategories":false,"fontColor":"#fff","midColor":"#36c","pointSize":"0","headerColor":"#3d85c6","vAxis":{"format":"#0.###############"},"headerHeight":40,"is3D":false,"logScale":false,"hAxis":{"maxAlternation":1},"wmode":"opaque","title":"","height":450,"mapType":"hybrid","isStacked":false,"showTip":true,"displayAnnotations":true,"titleY":"handgun carry permits","dataMode":"markers","titleX":"age ","colors":["#3366CC","#DC3912","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395"],"width":625,"smoothLine":false,"maxColor":"#222","lineWidth":"2","labelPosition":"right","fontSize":"14px","hasLabelsColumn":true,"maxDepth":2,"legend":"top","allowCollapse":true,"minColor":"#ccc","cht":"bhg","reverseAxis":false},"refreshInterval":5} </script>-->
-
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
-
-    </div><!--/.fluid-container-->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-  </body>
-</html>
+  </div></div><!--/span9-->
+  <h2>Project Goals:</h2>
+  <div class="row-fluid">
+    <div class="span4">
+      <h3>Create Base Map</h3>
+      <p>Our first goal should be to create an interactive choropleth map based on the <a href="http://leafletjs.com/examples/choropleth.html"><b class="icon-leaf"></b> Leaflet</a> tutorial.</p>
+      <p><a class="btn" href="http://leafletjs.com/examples/choropleth.html">View tutorial</a></p>
+    </div><!--/span-->
+    <div class="span4">
+      <h3>Standard geoJSON data import</h3>
+      <p>Follow the correct standards on using geoJSON to input information, including any "report" information, into the map.</p>
+    </div><!--/span-->
+    <div class="span4">
+      <h3>Map Control Layer</h3>
+      <p>Output the report data into a leaflet map control layer.  This is the most browser compatible way to displaying data from the report.</p>
+    </div><!--/span-->
+  </div><!--/row-->
+  <div class="row-fluid">
+    <div class="span4">
+      <h3>CSS Style Convention</h3>
+      <p>Import all map styles from a CSS file.  Currently the tutorial hard-codes this into the javascript.  This goes against typical web-conventions</p>
+    </div><!--/span-->
+    <div class="span4">
+      <h3>Google Docs Spreadsheet Support</h3>
+      <p>Extend the geoJSON import function to allow for data to be fed in directly from a public google docs spreadsheet.</p>
+    </div><!--/span-->
+    <div class="span4">
+      <h3>Style Map Control Layer</h3>
+      <p>Using only CSS, change the location of the map control layer to be outside of the map-area.  Try to accomplish this without changing the javascript at all.  Currently the map control layer works perfectly in all browsers, perhaps more advanced styling should be limited to IE9+ and all standards browsers.</p>
+    </div><!--/span-->
+  </div><!--/row-->
+</div><!--/row-->

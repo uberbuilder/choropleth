@@ -1,0 +1,17 @@
+safe:        true
+auto:        false
+server:      false
+server_port: 4000
+url:         http://localhost:4000
+
+source:      .
+destination: ./_site
+
+future:      true
+lsi:         false
+pygments:    true
+markdown:    redcarpet
+permalink:   pretty
+
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]

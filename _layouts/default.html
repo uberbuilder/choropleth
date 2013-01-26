@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% if page.title %} {{ page.title }} | {% endif %} Interactive Choropleth Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/screen.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="ico/favicon.png">
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="/">Interative Choropleth Map</a>
+          <div class="nav-collapse collapse">
+            <!--<p class="navbar-text pull-right">
+              <a href="http://github.com/jeremyi/choropleth" class="navbar-link">Fork me on Github</a>
+            </p>-->
+              <ul class="nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact the Developers <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li class="nav-header">Developers:</li>
+                  <li><a href="http://jeremyiglehart.com"><b class="icon-globe"></b> Jeremy Iglehart</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li class="nav-header">Links to other Choropleths:</li>
+                  <li><a href="http://www.commercialappeal.com/data/gunpermits/"><b class=" icon-screenshot"></b> Commercial Appeal's Gunpermit</a></li>
+                  <!--<li class="divider"></li>-->
+                  <li><a href="http://bl.ocks.org/4060606"><b class="icon-cog"></b> D3 Clean Choropleth (non-interactive)</a></li>
+                  <li><a href="http://bl.ocks.org/2206590"><b class="icon-cog"></b> D3 Clean Choropleth (interactive)</a></li>
+                  <li><a href="http://leafletjs.com/examples/choropleth.html"><b class="icon-leaf"></b> Leaflet</a></li>
+                  <li><a href="http://bost.ocks.org/mike/leaflet/"><b class="icon-cog"></b> + <b class="icon-leaf"></b> D3 + Leaflet</a></li>
+                  <li><a href="https://developers.google.com/chart/interactive/docs/gallery/geochart"><b class="icon-globe"></b> Google Developers Geochart</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    {% if page.title != "Home" %}
+    <ul class="breadcrumb">
+      <li><a href="/">Home</a> <span class="divider">/</span></li>
+      <li><a class="active" href="{{page.url}}" alt="{{page.title}}">{{page.title}}</a></li>
+    </ul>
+    {% endif %}
+
+    <div class="container-fluid">
+      {{ content }}
+      <footer>
+        <div class="accordion" id="accordion2">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">&hearts; 2013 by Jeremy Iglehart. Copying is an act of love. Please copy and share. To view license click here, and then scroll down<span class="pull-right"><b class="icon-time"></b> Updated: {{site.time}}</span></a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p class="muted"><small>MIT-LICENSE:</small></p>
+                <hr />
+                <p>Copyright &copy; 2013 Jeremy Iglehart <jeremy.iglehart@gmail.com></p>
+                <br />
+                <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                <br />
+                <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                <br />
+                <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+  </body>
+</html>
