@@ -30,13 +30,16 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
           <a class="brand" href="{{site.baseurl}}/">Interative Choropleth Map</a>
           <div class="nav-collapse collapse">
-            <!--<p class="navbar-text pull-right">
-              <a href="http://github.com/jeremyi/choropleth" class="navbar-link">Fork me on Github</a>
-            </p>-->
               <ul class="nav">
-              <li class="dropdown">
+                <li><a href="http://github.com/jeremyi/choropleth" class="hidden-desktop"><b class="icon-share-alt"></b> Fork me on Github</a></li>
+                <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact the Developers <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li class="nav-header">Developers:</li>
@@ -64,6 +67,8 @@
       </div>
     </div>
 
+    <a href="https://github.com/jeremyi/choropleth" class="visible-desktop"><img style="position: fixed; top: 41px; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
     {% if page.title != "Home" %}
     <ul class="breadcrumb">
       <li><a href="{{site.baseurl}}/">Home</a> <span class="divider">/</span></li>
@@ -74,10 +79,11 @@
     <div class="container-fluid">
       {{ content }}
       <footer>
+        <div class="well well-small"><b class="icon-time"></b> Project Last Updated: {{site.time}}</div>
         <div class="accordion" id="accordion2">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">&hearts; 2013 by Jeremy Iglehart. Copying is an act of love. Please copy and share. To view license click here, and then scroll down<span class="pull-right"><b class="icon-time"></b> Updated: {{site.time}}</span></a>
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">&hearts; 2013 by Jeremy Iglehart. Copying is an act of love. Please copy and share. To view license click here, and then scroll down</a>
             </div>
             <div id="collapseOne" class="accordion-body collapse">
               <div class="accordion-inner">

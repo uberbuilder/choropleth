@@ -1,15 +1,16 @@
-/* line 1, ../_sass/screen.scss */
-body {
-  padding-top: 60px;
-  padding-bottom: 40px;
+@media screen and (min-width: 980px) {
+  /* line 1, ../_sass/screen.scss */
+  body {
+    padding-top: 60px;
+  }
 }
 
-/* line 5, ../_sass/screen.scss */
+/* line 6, ../_sass/screen.scss */
 .sidebar-nav {
   padding: 9px 0;
 }
 
-/* line 8, ../_sass/screen.scss */
+/* line 9, ../_sass/screen.scss */
 footer {
   margin-top: 1.5em;
 }
