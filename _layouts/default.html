@@ -77,6 +77,9 @@
     {% endif %}
 
     <div class="container-fluid">
+      {% if page.title != "Home" %}
+      <h1>{{page.title}}</h1>
+      {% endif %}
       {{ content }}
       <footer>
         <div class="well well-small"><b class="icon-time"></b> Project Last Updated: {{site.time}}</div>
