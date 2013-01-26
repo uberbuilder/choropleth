@@ -1,7 +1,8 @@
 safe:        true
-auto:        false
+auto:        true
 server:      false
 server_port: 4000
+baseurl:     /choropleth
 url:         http://localhost:4000
 
 source:      .
