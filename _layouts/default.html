@@ -79,14 +79,33 @@
     <div class="container-fluid">
       {% if page.title != "Home" %}
       <h1>{{page.title}}</h1>
+      <p><small><a class="muted" href="{{site.baseurl}}{{page.url}}#disqus_thread" alt="{{page.title}}">comment count</a></small></p>
       {% endif %}
       {{ content }}
       <footer>
+        {% if page.comments %}
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'choropleth'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        {% endif %}
         <div class="well well-small"><b class="icon-time"></b> Project Last Updated: {{site.time}}</div>
         <div class="accordion" id="accordion2">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">&hearts; 2013 by Jeremy Iglehart. Copying is an act of love. Please copy and share. To view license click here, and then scroll down</a>
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">&hearts; 2013 by Jeremy Iglehart. Copying is an act of love. Please copy and share. This software is licensed. To view license click here, and then scroll down</a>
             </div>
             <div id="collapseOne" class="accordion-body collapse">
               <div class="accordion-inner">
@@ -126,6 +145,18 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
+    </script>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'choropleth'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
     </script>
   </body>
 </html>
