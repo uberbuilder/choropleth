@@ -1,0 +1,139 @@
+---
+layout:      test
+categories:  tests
+comments:    true
+date:        2013-01-28 18:00:15
+title:       Test 5 - Add Custom Control Layer
+subtitle:    Add a custom control later to display information saved in the geoJSON file
+---
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+<![endif]-->
+<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
+<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
+
+<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
+<script type="text/javascript">
+
+	// Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
+	var map = L.map('map_test_1').setView([37.8, -96], 4);
+
+	// This is where you get your map tiles.  You can get a free API key from cloudmade.com
+	var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+		attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+		key: 'c5007019bb4e4787afb0135c36690912',
+		styleId: 22677
+	}).addTo(map);
+
+	function getColor(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+	}
+
+	function style(feature) {
+    return {
+      fillColor: getColor(feature.properties.density),
+      weight: 1,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+    };
+	}
+
+  var info = L.control();
+
+  info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+  };
+
+  // method that we will use to update the control based on feature properties passed
+  info.update = function (props) {
+    var grades = [0, 10, 20, 50, 100, 200, 500, 1000];
+    this._div.innerHTML = '<h4>US Population Density</h4>' + (props ?
+      '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+      : 'Hover over a state<br /><br />');
+    if (!props) {
+      for (var i = 0; i < grades.length; i++) {
+        this._div.innerHTML +=
+          '<i class="legend-i" style="background:' + getColor(grades[i] + 1) + '"></i> <span class="legend-label">' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '</span><br>' : '+');
+      }
+    }
+  };
+
+  info.addTo(map);
+
+	var geojson;
+
+	function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+    	fillColor: '#78A700',
+      dashArray: '',
+      fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+    info.update(layer.feature.properties);
+	}
+
+	function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+    info.update();
+	}
+
+	function onEachFeature(feature, layer) {
+    layer.on({
+      mouseover: highlightFeature,
+      mouseout: resetHighlight,
+    });
+	}
+
+	geojson = L.geoJson(statesData, {
+    style: style,
+    onEachFeature: onEachFeature
+	}).addTo(map);
+
+</script>
+
+<style type="text/css">
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+.legend-i {
+  clear: both;
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+.legend-label {
+  line-height: 18px;
+}
+</style>

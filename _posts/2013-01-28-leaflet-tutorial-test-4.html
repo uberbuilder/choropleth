@@ -1,0 +1,86 @@
+---
+layout:      test
+categories:  tests
+comments:    true
+date:        2013-01-28 17:26:28
+title:       Test 4 - Add Some Interaction
+subtitle:    Add some mouse over effects
+---
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+<![endif]-->
+<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
+<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
+
+<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
+<script type="text/javascript">
+
+	// Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
+	var map = L.map('map_test_1').setView([37.8, -96], 4);
+
+	// This is where you get your map tiles.  You can get a free API key from cloudmade.com
+	var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+		attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+		key: 'c5007019bb4e4787afb0135c36690912',
+		styleId: 22677
+	}).addTo(map);
+
+	function getColor(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+	}
+
+	function style(feature) {
+    return {
+      fillColor: getColor(feature.properties.density),
+      weight: 1,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+    };
+	}
+
+	var geojson;
+
+	function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+    	fillColor: '#78A700',
+      dashArray: '',
+      fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+	}
+
+	function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+	}
+
+	function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+    });
+	}
+
+	geojson = L.geoJson(statesData, {
+	    style: style,
+	    onEachFeature: onEachFeature
+	}).addTo(map);
+
+</script>
