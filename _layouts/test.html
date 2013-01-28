@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<ul class="breadcrumb">
+  <li><a href="{{site.baseurl}}/">Home</a> <span class="divider">/</span></li>
+  <li><a class="active" href="{{site.baseurl}}{{page.url}}" alt="{{page.title}}">{{page.title}}</a></li>
+</ul>
+
+<div class="container-fluid">
+	<h1>{{page.title}}</h1>
+	{% if page.subtitle %}
+	<p class="muted"><small>{{page.subtitle}}</small></p>
+	{% endif %}
+	<p><small><a class="muted" href="{{site.baseurl}}{{page.url}}#disqus_thread" alt="{{page.title}}">comment count</a></small></p>
+
+	<div class="row-fluid">
+		<div class="span10 offset1">
+			<h2>Test Case:</h2>
+
+			{{ content }}
+
+		</div><!--/.span10 offet1-->
+	</div> <!--/.row-fluid-->
+
+	<div class="row-fluid">
+		<div class="span10 offset1">
+			<h2>Code:</h2>
+
+{% highlight html linenos %}
+
+{{ content }}
+
+{% endhighlight %}
+
+		</div><!--/.span10 offet1-->
+	</div> <!--/.row-fluid-->
+</div> <!--/.container-fluid-->
