@@ -70,22 +70,9 @@
 
     <a href="{{site.repository}}" class="visible-desktop"><img style="position: fixed; top: 41px; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
 
-    {% if page.title != "Home" %}
-    <ul class="breadcrumb">
-      <li><a href="{{site.baseurl}}/">Home</a> <span class="divider">/</span></li>
-      <li><a class="active" href="{{site.baseurl}}{{page.url}}" alt="{{page.title}}">{{page.title}}</a></li>
-    </ul>
-    {% endif %}
+    {{ content }}
 
     <div class="container-fluid">
-      {% if page.title != "Home" %}
-      <h1>{{page.title}}</h1>
-      {% if page.subtitle %}
-      <p class="muted"><small>{{page.subtitle}}</small></p>
-      {% endif %}
-      <p><small><a class="muted" href="{{site.baseurl}}{{page.url}}#disqus_thread" alt="{{page.title}}">comment count</a></small></p>
-      {% endif %}
-      {{ content }}
       <footer>
         {% if page.comments %}
 
@@ -122,12 +109,12 @@
                 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
                 <br />
                 <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+              </div><!--/.accordion-inner-->
+            </div><!--/.collapseOne-->
+          </div><!--/.accordion-group-->
+        </div><!--/.accordion-->
       </footer>
-    </div>
+    </div><!--/.container-fluid-->
 
     <!-- Le javascript
     ================================================== -->

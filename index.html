@@ -1,5 +1,5 @@
 ---
-layout:   default
+layout:   frontPage
 comments: true
 title:    Home
 ---
@@ -14,7 +14,7 @@ title:    Home
         {% endfor %}
       </ul>
     </div><!--/.well -->
-  </div><!--/span-->
+  </div><!--/.span-->
 
   <div class="span9">
     <div class="hero-unit">
@@ -26,35 +26,35 @@ title:    Home
       <p>On the drive home from the Philly Give Camp, I got to thinking about all of the improvements that we could do to make this project even better.  By the time I got home, I decided what the project really needed was a complete re-write.</p>
       <p>And thus, this project was born.</p>
     </div>
-  </div></div><!--/span9-->
+  </div></div><!--/.span9-->
   <h2>Project Goals:</h2>
   <div class="row-fluid">
     <div class="span4">
       <h3>Create Base Map</h3>
       <p>Our first goal should be to create an interactive choropleth map based on the <a href="http://leafletjs.com/examples/choropleth.html"><b class="icon-leaf"></b> Leaflet</a> tutorial.</p>
       <p><a class="btn" href="http://leafletjs.com/examples/choropleth.html">View tutorial</a></p>
-    </div><!--/span-->
+    </div><!--/.span4-->
     <div class="span4">
       <h3>Standard geoJSON data import</h3>
       <p>Follow the correct standards on using geoJSON to input information, including any "report" information, into the map.</p>
-    </div><!--/span-->
+    </div><!--/.span4-->
     <div class="span4">
       <h3>Map Control Layer</h3>
       <p>Output the report data into a leaflet map control layer.  This is the most browser compatible way to displaying data from the report.</p>
-    </div><!--/span-->
-  </div><!--/row-->
+    </div><!--/.span4-->
+  </div><!--/.row-fluid-->
   <div class="row-fluid">
     <div class="span4">
       <h3>CSS Style Convention</h3>
       <p>Import all map styles from a CSS file.  Currently the tutorial hard-codes this into the javascript.  This goes against typical web-conventions</p>
-    </div><!--/span-->
+    </div><!--/.span4-->
     <div class="span4">
       <h3>Google Docs Spreadsheet Support</h3>
       <p>Extend the geoJSON import function to allow for data to be fed in directly from a public google docs spreadsheet.</p>
-    </div><!--/span-->
+    </div><!--/.span4-->
     <div class="span4">
       <h3>Style Map Control Layer</h3>
       <p>Using only CSS, change the location of the map control layer to be outside of the map-area.  Try to accomplish this without changing the javascript at all.  Currently the map control layer works perfectly in all browsers, perhaps more advanced styling should be limited to IE9+ and all standards browsers.</p>
-    </div><!--/span-->
-  </div><!--/row-->
-</div><!--/row-->
+    </div><!--/.span4-->
+  </div><!--/.row-fluid-->
+</div><!--/.row-fluid-->
