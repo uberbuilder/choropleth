@@ -5,8 +5,8 @@ title:    Home
 ---
 <div class="container-fluid">
   <div class="row-fluid">
-    
-    <div class="span9">
+
+    <div class="span8">
       <div class="hero-unit">
         <h1>Interactive Choropleth Map</h1>
         <hr />
@@ -18,7 +18,7 @@ title:    Home
       </div>
     </div><!--/.span9-->
 
-    <div class="span3">
+    <div class="span4">
       <h3 class="muted">Project Progress:</h3>
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
@@ -34,17 +34,17 @@ title:    Home
 
   <h2>Project Goals:</h2>
   <div class="row-fluid">
-    <div class="span4">
-      <h3>Create Base Map</h3>
+    <div class="span4 goal-done">
+      <h3>Create Base Map [done]</h3>
       <p>Our first goal should be to create an interactive choropleth map based on the <a href="http://leafletjs.com/examples/choropleth.html"><b class="icon-leaf"></b> Leaflet</a> tutorial.</p>
       <p><a class="btn" href="http://leafletjs.com/examples/choropleth.html">View tutorial</a></p>
     </div><!--/.span4-->
-    <div class="span4">
-      <h3>Standard geoJSON data import</h3>
+    <div class="span4 goal-done">
+      <h3>Standard geoJSON data import [done]</h3>
       <p>Follow the correct standards on using geoJSON to input information, including any "report" information, into the map.</p>
     </div><!--/.span4-->
-    <div class="span4">
-      <h3>Map Control Layer</h3>
+    <div class="span4 goal-done">
+      <h3>Map Control Layer [done]</h3>
       <p>Output the report data into a leaflet map control layer.  This is the most browser compatible way to displaying data from the report.</p>
     </div><!--/.span4-->
   </div><!--/.row-fluid-->
@@ -63,3 +63,12 @@ title:    Home
     </div><!--/.span4-->
   </div><!--/.row-fluid-->
 </div><!--/.row-fluid-->
+
+<style type="text/css">
+.goal-done {
+  color: #999999;
+}
+.goal-done h3 {
+  text-decoration: line-through;
+}
+</style>
