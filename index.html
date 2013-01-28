@@ -4,29 +4,34 @@ comments: true
 title:    Home
 ---
 <div class="container-fluid">
-<div class="row-fluid">
-  <div class="span3">
-    <div class="well sidebar-nav">
-      <ul class="nav nav-list">
-        <li class="nav-header">Version History:</li>
-        {% for post in site.posts %}
-        <li><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></li>
-        {% endfor %}
-      </ul>
-    </div><!--/.well -->
-  </div><!--/.span-->
+  <div class="row-fluid">
+    
+    <div class="span9">
+      <div class="hero-unit">
+        <h1>Interactive Choropleth Map</h1>
+        <hr />
+        <p>The purpose of this project is to provide a resource for those who would like to develop or use a professionally designed interactive choropleth map.</p>
+        <hr />
+        <p>This project was spawned from one of the assignments given out at the 3rd <a href="http://phillygivecamp.org/">Philly Give Camp</a>.  <a href="https://github.com/jennvoss/gpcah-map">The original project</a> was the answer to a request from the <a href="http://www.hungercoalition.org/">Coalition Against Hunger</a> to create an interactive choropleth map for the purpose of peoperly displaying information gathered in most comprehensive report on hunger in the state of pennsylvania ever generated.</p>
+        <p>On the drive home from the Philly Give Camp, I got to thinking about all of the improvements that we could do to make this project even better.  By the time I got home, I decided what the project really needed was a complete re-write.</p>
+        <p>And thus, this project was born.</p>
+      </div>
+    </div><!--/.span9-->
 
-  <div class="span9">
-    <div class="hero-unit">
-      <h1>Interactive Choropleth Map</h1>
-      <hr />
-      <p>The purpose of this project is to provide a resource for those who would like to develop or use a professionally designed interactive choropleth map.</p>
-      <hr />
-      <p>This project was spawned from one of the assignments given out at the 3rd <a href="http://phillygivecamp.org/">Philly Give Camp</a>.  <a href="https://github.com/jennvoss/gpcah-map">The original project</a> was the answer to a request from the <a href="http://www.hungercoalition.org/">Coalition Against Hunger</a> to create an interactive choropleth map for the purpose of peoperly displaying information gathered in most comprehensive report on hunger in the state of pennsylvania ever generated.</p>
-      <p>On the drive home from the Philly Give Camp, I got to thinking about all of the improvements that we could do to make this project even better.  By the time I got home, I decided what the project really needed was a complete re-write.</p>
-      <p>And thus, this project was born.</p>
-    </div>
-  </div></div><!--/.span9-->
+    <div class="span3">
+      <h3 class="muted">Project Progress:</h3>
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">List of tests:</li>
+          {% for post in site.categories.tests %}
+          <li><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div><!--/.well -->
+    </div><!--/.span-->
+
+  </div><!--/.row-fluid-->
+
   <h2>Project Goals:</h2>
   <div class="row-fluid">
     <div class="span4">
