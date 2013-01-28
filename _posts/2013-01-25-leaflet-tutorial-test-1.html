@@ -18,14 +18,14 @@ subtitle:    The basic code you need to display a map on the screen using leafle
 
 <script type="text/javascript">
 
-	// Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
-	var map = L.map('map_test_1').setView([37.8, -96], 4);
+  // Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
+  var map = L.map('map_test_1').setView([37.8, -96], 4);
 
-	// This is where you get your map tiles.  You can get a free API key from cloudmade.com
-	var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
-		attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
-		key: 'c5007019bb4e4787afb0135c36690912',
-		styleId: 22677
-	}).addTo(map);
+  // This is where you get your map tiles.  You can get a free API key from cloudmade.com
+  var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+    key: 'c5007019bb4e4787afb0135c36690912',
+    styleId: 22677
+  }).addTo(map);
 
 </script>
