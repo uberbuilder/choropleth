@@ -1,0 +1,24 @@
+---
+layout:      test
+categories:  tests
+comments:    true
+date:        2013-01-29 00:57:51
+title:       Tabletop.js - gives your spreadsheets legs!
+subtitle:    Grab the Data from Google Docs Spreadsheet using Tabletop.js
+---
+<p>This is actually working - you have to look in your console though for the object to be displayed.  If you do this in Chrome (which you should already be using anyways) you will be able to browse the entire object sent back from tabletop.js<p>
+<script src="{{site.baseurl}}/js/tabletop.js"></script>
+<script type="text/javascript">
+  window.onload = function() { init() };
+
+  function init() {
+    Tabletop.init( { key: '0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE',
+                     callback: showInfo,
+                     simpleSheet: true } )
+  }
+
+  function showInfo(data, tabletop) {
+    alert("Successfully processed! Now, open your javascript console (in firefox or chrome) to browse the data sent to the log.")
+    console.log(data);
+  }
+</script>
