@@ -1,0 +1,80 @@
+---
+layout:      test
+categories:  tests
+comments:    true
+date:        2013-01-29 15:10:03
+title:       geoJSON Single County Display
+subtitle:    Basic Map + 1 County Loaded through geoJSON
+---
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+<![endif]-->
+<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
+<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
+
+<script src="{{site.baseurl}}/js/tabletop.js"></script>
+
+<script type="text/javascript">
+  // Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
+  var map = L.map('map_test_1').setView([41.09, -77.21], 7);
+
+  // This is where you get your map tiles.  You can get a free API key from cloudmade.com
+  var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+    key: 'c5007019bb4e4787afb0135c36690912',
+    styleId: 22677
+  }).addTo(map);
+
+  window.onload = function() { init() };
+
+  function init() {
+    Tabletop.init( { key: '0Arx6eO5Sf52fdDd5dFJjd3d4UEkxOHNuQnN6UnlEZkE',
+                     callback: showInfo,
+                     simpleSheet: true } )
+  }
+
+  function showInfo(data, tabletop) {
+    polygon = data[0].coordinates;
+    console.log(data[0].coordinates);
+    var newData = [];
+    var currentObject;
+    for (currentObject = 0; currentObject < data.length; ++currentObject) {
+
+    }
+  }
+
+  var mapData = {
+    "type":"FeatureCollection",
+    "properties":{"kind":"state","state":"PA"},
+    "features":[
+    {
+      "type":"Feature",
+      "properties":{"kind":"county","name":"Adams","state":"PA"},
+      "geometry":
+      {
+        "type":"MultiPolygon","coordinates":[[[
+        [-77.1393,40.0673],
+        [-77.0188,40.0126],
+        [-76.9641,39.9359],
+        [-76.9860,39.8976],
+        [-76.9531,39.8537],
+        [-76.9969,39.8318],
+        [-76.9969,39.7223],
+        [-77.2160,39.7223],
+        [-77.4570,39.7223],
+        [-77.4734,39.9469],
+        [-77.4022,39.9961],
+        [-77.1886,40.0290]
+        ]]]
+      }
+    }
+    ]
+  };
+
+  //L.geoJson(mapData).addTo(map);
+
+</script>

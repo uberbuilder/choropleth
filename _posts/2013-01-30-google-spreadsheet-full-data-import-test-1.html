@@ -2,11 +2,11 @@
 layout:      test
 categories:  tests
 comments:    true
-date:        2013-01-29 00:57:51
-title:       Tabletop.js - gives your spreadsheets legs!
-subtitle:    Grab the Data from Google Docs Spreadsheet using Tabletop.js
+date:        2013-01-30 23:11:53
+title:       Google Spreadsheet Full Import Test 1
+subtitle:    Testing to get all the geoJSON data properly processed as a real object now
 ---
-<h1>This is actually working</h1>
+<p>Testing to get all the geoJSON data properly processed as a real object now</p>
 <h2>Press [Command] + [Option] + [' i ']</h2>
 <p>If you're on a mac, to open the console and see the console.log()</p>
 <p>You should be able to see one large object of ~67 objects coming from the google spreadsheet, and two arrays being displayed with two different versions of the column headers</p>
@@ -27,7 +27,11 @@ subtitle:    Grab the Data from Google Docs Spreadsheet using Tabletop.js
   function init() {
     Tabletop.init( { key: mapKey,
                      callback: showInfo,
-                     simpleSheet: true } );
+                     simpleSheet: true,
+                     postProcess: function (element) {
+                      element['geojson'] = JSON.parse(element['geojson']);
+                     }
+                   });
   }
 
   function showInfo(data, tabletop) {
