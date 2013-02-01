@@ -7,36 +7,38 @@ title:       Version 0.1.0 - geoJSON From Google Docs
 subtitle:    Grab the Data from Google Docs Spreadsheet
 ---
 
-
-<script type="text/javascript">
-
-  // Once all tests are complete this version is complete.
-  // [TODO] include all required .js files
-  // [TODO] use tabletop.js to load data table from google spreadsheet and turn geoJSON into real objects
-  // [TODO] use miso.ds.xx.js to load table headers from google spreadsheet
-  // [TODO] make array to associate machine headers to human headers from spreadsheet
-  // [TODO] forEach spreadsheet-data-row display geoJSON object to map
-  // [TODO] forEach spreadsheet-data-row update the map control layer
-
-</script>
-
+<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
 
 <script src="{{site.baseurl}}/js/tabletop.js"></script>
 <script src="{{site.baseurl}}/js/miso.ds.deps.ie.min.0.4.0.js"></script>
+<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
 <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
 <![endif]-->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
-
-<!-- You must set the height of the div for the map, yes this should be in an external file -->
-<div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
-<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
 <script type="text/javascript">
+
+  // Once all tests are complete this version is complete.
+  // [Done] include all required .js files
+  // [Done] use tabletop.js to load data table from google spreadsheet and turn geoJSON into real objects
+  // [Done] use miso.ds.xx.js to load table headers from google spreadsheet
+  // [Done] make array to associate machine headers to human headers from spreadsheet
+  // [Done] forEach spreadsheet-data-row display geoJSON object to map
+  // [TODO] forEach spreadsheet-data-row update the map control layer
 
   window.onload = function() { init() };
 
   var mapKey = "0Arx6eO5Sf52fdDd5dFJjd3d4UEkxOHNuQnN6UnlEZkE";
+  var sheetName = 'Sheet1'
+  var humanReadableHeader = [];
+  var defaultMapCenter = [41.05, -77.37];
+  var defaultZoomLevel = 7;
+  var masterGeoJSON = {
+    "type": "FeatureCollection",
+    "features": []
+    };
 
   var ds = new Miso.Dataset({
     importer : Miso.Dataset.Importers.GoogleSpreadsheet,
@@ -56,20 +58,36 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
   }
 
   function showInfo(data, tabletop) {
-    console.log(data);
-    console.log(tabletop.sheets('Sheet1').column_names);
+    //console.log(data);
     ds.fetch({ 
       success : function() {
-        console.log(ds.columnNames());
+        tabletop.sheets(sheetName).column_names.forEach(function(element, index, array) {
+          humanReadableHeader[element] = ds.columnNames()[index];
+        });
+        //console.log(humanReadableHeader);
+        data.forEach(function(rowElement, index, array) {
+          tabletop.sheets(sheetName).column_names.forEach(function(headerName, index, array) {
+            if (headerName !== 'geojson') {
+              rowElement.geojson.features[0].properties[headerName] = rowElement[headerName];
+            }
+          });
+          //rowElement.geojson.features[0].id = '' + index;
+          masterGeoJSON.features[index] = rowElement.geojson.features[0];
+        });
+        console.log(data);
+        console.log(masterGeoJSON);
+        console.log(statesData);
+        loadMapData(masterGeoJSON);
       },
       error : function() {
-        console.log("Are you sure you are connected to the internet?");
+        // [TODO] presumably we should do something here - but this ALWAYS executes.  This is something I should fix in the future
+        // console.log("Are you sure you are connected to the internet?");
       }
     });
   }
 
-  // Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker" copy and paste that into the function call below.
-  var map = L.map('map_test_1').setView([37.8, -96], 4);
+  // Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker".
+  var map = L.map('map_test_1').setView(defaultMapCenter, defaultZoomLevel);
 
   // This is where you get your map tiles.  You can get a free API key from cloudmade.com
   var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
@@ -154,10 +172,12 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
     });
   }
 
-  geojson = L.geoJson(statesData, {
-    style: style,
-    onEachFeature: onEachFeature
-  }).addTo(map);
+  function loadMapData(geoJSONfile) {
+    geojson = L.geoJson(geoJSONfile, {
+      style: style,
+      onEachFeature: onEachFeature
+    }).addTo(map);
+  }
 
 </script>
 
