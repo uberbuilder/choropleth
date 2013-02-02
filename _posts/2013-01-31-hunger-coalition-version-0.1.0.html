@@ -7,11 +7,12 @@ title:       Version 0.1.0 - geoJSON From Google Docs
 subtitle:    Grab the Data from Google Docs Spreadsheet
 ---
 
+<script src="{{site.baseurl}}/js/es5-shim.min.js"></script>
+
 <!-- You must set the height of the div for the map, yes this should be in an external file -->
 <div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
 
 <script src="{{site.baseurl}}/js/tabletop.js"></script>
-<script src="{{site.baseurl}}/js/miso.ds.deps.ie.min.0.4.0.js"></script>
 <script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
 <!--[if lte IE 8]>
@@ -23,16 +24,19 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
   // Once all tests are complete this version is complete.
   // [Done] include all required .js files
   // [Done] use tabletop.js to load data table from google spreadsheet and turn geoJSON into real objects
-  // [Done] use miso.ds.xx.js to load table headers from google spreadsheet
   // [Done] make array to associate machine headers to human headers from spreadsheet
   // [Done] forEach spreadsheet-data-row display geoJSON object to map
-  // [TODO] forEach spreadsheet-data-row update the map control layer
+  // [Done] forEach spreadsheet-data-row update the map control layer
+  // [TODO] Add feedback to the control layer to show loading of map.
 
   window.onload = function() { init() };
 
   var mapKey = "0Arx6eO5Sf52fdDd5dFJjd3d4UEkxOHNuQnN6UnlEZkE";
   var sheetName = 'Sheet1'
-  var humanReadableHeader = [];
+  var geoJSONHeaderName = "ubergeojson";
+  var headersSheetName = "uber_headers-sheet";
+  var sheetHeaders = [];
+
   var defaultMapCenter = [41.05, -77.37];
   var defaultZoomLevel = 7;
   var masterGeoJSON = {
@@ -40,50 +44,43 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
     "features": []
     };
 
-  var ds = new Miso.Dataset({
-    importer : Miso.Dataset.Importers.GoogleSpreadsheet,
-    parser : Miso.Dataset.Parsers.GoogleSpreadsheet,
-    key : mapKey,
-    worksheet : "1"
-  });
-
   function init() {
     Tabletop.init( { key: mapKey,
                      callback: showInfo,
-                     simpleSheet: true,
-                     postProcess: function (element) {
-                      element['geojson'] = JSON.parse(element['geojson']);
-                     }
+                     wanted: [sheetName, headersSheetName]
                    });
   }
 
   function showInfo(data, tabletop) {
-    //console.log(data);
-    ds.fetch({ 
-      success : function() {
-        tabletop.sheets(sheetName).column_names.forEach(function(element, index, array) {
-          humanReadableHeader[element] = ds.columnNames()[index];
-        });
-        //console.log(humanReadableHeader);
-        data.forEach(function(rowElement, index, array) {
-          tabletop.sheets(sheetName).column_names.forEach(function(headerName, index, array) {
-            if (headerName !== 'geojson') {
-              rowElement.geojson.features[0].properties[headerName] = rowElement[headerName];
-            }
-          });
-          //rowElement.geojson.features[0].id = '' + index;
-          masterGeoJSON.features[index] = rowElement.geojson.features[0];
-        });
-        console.log(data);
-        console.log(masterGeoJSON);
-        console.log(statesData);
-        loadMapData(masterGeoJSON);
-      },
-      error : function() {
-        // [TODO] presumably we should do something here - but this ALWAYS executes.  This is something I should fix in the future
-        // console.log("Are you sure you are connected to the internet?");
-      }
+    console.log(data);
+    console.log(tabletop.sheets(headersSheetName));
+    console.log(tabletop.sheets(sheetName));
+    console.log(tabletop.sheets(sheetName).elements);
+
+    tabletop.sheets(headersSheetName).elements.forEach( function(element, index) {
+      sheetHeaders[index] = {
+        machineReadable: tabletop.sheets(sheetName).column_names[index],
+        humanReadable: element.uberheaderlabel
+      };
     });
+
+    console.log(sheetHeaders);
+
+    tabletop.sheets(sheetName).elements.forEach(function(element, rowIndex) {
+      masterGeoJSON.features[rowIndex] = JSON.parse(element[geoJSONHeaderName]).features[0];
+      tabletop.sheets(sheetName).column_names.forEach(function(headerName, headerIndex) {
+        if (headerName !== geoJSONHeaderName) {
+          masterGeoJSON.features[rowIndex].properties[headerName] = element[headerName];
+        } else {
+          // Do nothing, we already took care of that above this line.
+        }
+      });
+    });
+
+    console.log(data);
+    console.log(masterGeoJSON);
+    console.log(statesData);
+    loadMapData(masterGeoJSON);
   }
 
   // Setup the map to center where you would like it to.  You can always to go maps.google.com and right click anywhere on the map and "Drop LatLng Marker".
@@ -109,7 +106,7 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
 
   function style(feature) {
     return {
-      fillColor: getColor(feature.properties.density),
+      fillColor: getColor(feature.properties.foodinsecurityrate),
       weight: 1,
       opacity: 1,
       color: 'white',
