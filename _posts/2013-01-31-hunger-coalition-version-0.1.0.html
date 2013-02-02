@@ -53,10 +53,10 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
   }
 
   function showInfo(data, tabletop) {
-    console.log(data);
-    console.log(tabletop.sheets(headersSheetName));
-    console.log(tabletop.sheets(sheetName));
-    console.log(tabletop.sheets(sheetName).elements);
+    //console.log(data);
+    //console.log(tabletop.sheets(headersSheetName));
+    //console.log(tabletop.sheets(sheetName));
+    //console.log(tabletop.sheets(sheetName).elements);
 
     tabletop.sheets(headersSheetName).elements.forEach( function(element, index) {
       sheetHeaders[index] = {
@@ -65,7 +65,7 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
       };
     });
 
-    console.log(sheetHeaders);
+    //console.log(sheetHeaders);
 
     tabletop.sheets(sheetName).elements.forEach(function(element, rowIndex) {
       masterGeoJSON.features[rowIndex] = JSON.parse(element[geoJSONHeaderName]).features[0];
@@ -78,9 +78,9 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
       });
     });
 
-    console.log(data);
-    console.log(masterGeoJSON);
-    console.log(statesData);
+    //console.log(data);
+    //console.log(masterGeoJSON);
+    //console.log(statesData);
     loadMapData(masterGeoJSON);
   }
 
