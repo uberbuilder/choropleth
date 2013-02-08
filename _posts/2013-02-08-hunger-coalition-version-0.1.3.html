@@ -2,9 +2,9 @@
 layout:      test
 categories:  tests
 comments:    false
-date:        2013-02-08 00:14:27
-title:       Version 0.1.2 - Color the regions based on range from spreadsheet.
-subtitle:    Choose the map colors based on a range from the data in the spreadsheet.
+date:        2013-02-08 16:24:40
+title:       Version 0.1.3 - 7 Color Regions.
+subtitle:    Seven color regions.
 
 mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
@@ -124,8 +124,8 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 
     choroplethRangeHigh = Math.max.apply(null, choroplethRangeCandidate);
     choroplethRangeLow = Math.min.apply(null, choroplethRangeCandidate);
-    for (i=0;i<6;i++) {
-      choroplethRangeSteps[i] = parseFloat(choroplethRangeLow + (((choroplethRangeHigh - choroplethRangeLow) / 6) * i));
+    for (i=0;i<7;i++) {
+      choroplethRangeSteps[i] = parseFloat(choroplethRangeLow + (((choroplethRangeHigh - choroplethRangeLow) / 7) * i));
     }
     console.log("Max Choropleth Range: " + choroplethRangeHigh);
     console.log("Min Choropleth Range: " + choroplethRangeLow);
@@ -181,14 +181,15 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   // - from the data provided automatically to provide a 5 to 10 color change range.
 
   // [TODO] re-write getColor() to calculate the 5 to 10 color step automatically based on the data from the spreadsheet.
-  
+
   function getColor(d) {
-    return d > choroplethRangeSteps[5]   ? '#BD0026' :
-           d > choroplethRangeSteps[4]   ? '#F03B20' :
+    return d > choroplethRangeSteps[6]   ? '#B10026' :
+           d > choroplethRangeSteps[5]   ? '#E31A1C' :
+           d > choroplethRangeSteps[4]   ? '#FC4E2A' :
            d > choroplethRangeSteps[3]   ? '#FD8D3C' :
            d > choroplethRangeSteps[2]   ? '#FEB24C' :
            d > choroplethRangeSteps[1]   ? '#FED976' :
-                                           '#FFFFB2';
+                                            '#FFFFB2';
   }
 
   // [TODO] re-write this to get the styles from a stylesheet instead of hard-coding them here.
