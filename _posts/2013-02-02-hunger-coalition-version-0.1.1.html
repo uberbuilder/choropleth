@@ -2,14 +2,24 @@
 layout:      test
 categories:  tests
 comments:    false
-date:        2013-01-31 01:45:16
-title:       Version 0.1.0 - geoJSON From Google Docs
+date:        2013-02-02 21:15:30
+title:       Version 0.1.1 - geoJSON From Google Docs
 subtitle:    Grab the Data from Google Docs Spreadsheet
+
+mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
+
+<p>
+  This map is generated from data in this Google Docs Spreasheet:<br />
+  <a href="https://docs.google.com/spreadsheet/pub?key=0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE&output=html">https://docs.google.com/spreadsheet/pub?key=0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE&output=html</a>
+</p>
 
 <!-- These are shims for IE6,7,8 and the like "lesser-browsers" -->
 <script src="{{site.baseurl}}/js/es5-shim.min.js"></script>
 <script src="{{site.baseurl}}/js/json2.js"></script>
+
+<!-- used for javascript mustache templating -->
+<script src="{{site.baseurl}}/js/mustache.js"></script>
 
 <!-- You must set the height of the div for the map, yes this should be in an external file -->
 <div id="map_test_1" style="height: 400px; margin: 3em 0;"></div>
@@ -22,6 +32,7 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
 <![endif]-->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
 <script type="text/javascript">
+
   // Once all tests are complete this version is complete.
   // [Done] include all required .js files
   // [Done] use tabletop.js to load data table from google spreadsheet and turn geoJSON into real objects
@@ -35,8 +46,8 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
   window.onload = function() { init() };
 
   // Initialize the different constants that this uses to get information from a Google-Drive spreadsheet
-  var mapKey = "0Arx6eO5Sf52fdDd5dFJjd3d4UEkxOHNuQnN6UnlEZkE";
-  var sheetName = 'Sheet1'
+  var mapKey = "0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE";
+  var sheetName = 'Hunger Data'
   var geoJSONHeaderName = "ubergeojson";
   var headersSheetName = "uberMap_meta-data";
 
@@ -51,6 +62,7 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
     "features": []
     };
   var geojson;
+  var controlPanelTemplate = "{{page.mustacheSetDelimiter}}";
 
   // init() is where we actually go to the Google-Drive spreadsheet and load the data in.
   function init() {
@@ -67,7 +79,7 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
     // I leave these here to toggle the ability to check out these variables in the browser
     // - so I can see what we're actually pulling from the Google-Drive spreadsheet.
 
-    // --- After data processing variables --- //
+    // --- Before data processing variables --- //
 
     //console.log(data);
     //console.log(tabletop.sheets(headersSheetName));
@@ -87,8 +99,9 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
       };
     });
 
-    // Brower-view toggle for debugging:
-    //console.log(sheetHeaders);
+    // browser-view toggle for debugging:
+    console.log("Headers:");
+    console.log(sheetHeaders);
 
     tabletop.sheets(sheetName).elements.forEach(function(element, rowIndex) {
       masterGeoJSON.features[rowIndex] = JSON.parse(element[geoJSONHeaderName]).features[0];
@@ -101,13 +114,31 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
       });
     });
 
-    // More brower-view toggles for debugging:
+    // More browser-view toggles for debugging:
 
     // --- After data processing variables --- //
 
     //console.log(data);
-    //console.log(masterGeoJSON);
+    console.log("masterGeoJSON:");
+    console.log(masterGeoJSON);
     //console.log(statesData);
+
+    //Build the mustache template
+    controlPanelTemplate += "<ul>";
+
+    sheetHeaders.forEach( function(sheetHeader, sheetHeaderIndex){
+      if (sheetHeader.machineReadable !== geoJSONHeaderName) {
+        controlPanelTemplate += "<li>" +
+          '<span class="map-data-property label">' + sheetHeader.humanReadable + "</span>" +
+          ": " + 
+          '<span class="map-data-property value">' + "{u{" + sheetHeader.machineReadable + "}u}" + "</span>" +
+          "</li>";
+      }
+    });
+
+    controlPanelTemplate += "</ul>";
+
+    console.log(controlPanelTemplate);
 
     // ---
 
@@ -161,10 +192,6 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
     };
   }
 
-  // [TODO] Change the entire way this works.
-  // [TODO] Load all of the headers we gather from the database except the geoJSONHeaderName
-  // ------  in the order that they appear in the Google-Drive Spreadsheet
-
   var info = L.control();
 
   info.onAdd = function (map) {
@@ -178,17 +205,11 @@ subtitle:    Grab the Data from Google Docs Spreadsheet
 
     var grades = [0, 10, 20, 50, 100, 200, 500, 1000];
 
-    this._div.innerHTML = '<h4>US Population Density</h4>' + (props ?
-      '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
-      : 'Hover over a state<br /><br />');
-
-    // This is called with !props when the mouse goes away from an element.
-    if (!props) {
-      for (var i = 0; i < grades.length; i++) {
-        this._div.innerHTML +=
-          '<i class="legend-i" style="background:' + getColor(grades[i] + 1) + '"></i> <span class="legend-label">' +
-          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '</span><br>' : '+');
-      }
+    if (props) {
+      // This is called with when the mouse over an element.
+      this._div.innerHTML = Mustache.render(controlPanelTemplate, props);
+    } else {
+      // [TODO] Display Map-Legend when not hovering
     }
   };
 
