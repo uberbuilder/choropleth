@@ -11,7 +11,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 <style type="text/css">
 #map_test_1 {
   height: 500px;
-  width: 600px;
+  width: 880px;
   margin: 3em 0;
 }
 
@@ -301,9 +301,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     if (polygonHasFocus) {
       map.fitBounds(zoomToJSONObject.getBounds());
       polygonHasFocus = false;
-      if (layer !== lastClickedLayer){
-       geojson.resetStyle(lastClickedLayer);
-      }
+      geojson.resetStyle(lastClickedLayer);
       info.update();
     } else {
       map.fitBounds(layer.getBounds());
@@ -349,6 +347,11 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
         polygonHasFocus = false;
         geojson.resetStyle(lastClickedLayer);
         info.update();
+      },
+      zoomend: function() {
+        if (polygonHasFocus) {
+          map.panBy([150, 0]);
+        }
       }
     });
   }
