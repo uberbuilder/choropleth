@@ -2,9 +2,9 @@
 layout:      test
 categories:  tests
 comments:    false
-date:        2013-02-21 12:58:53
-title:       Version 0.2.0 - Small optimizations
-subtitle:    Use jQuery's $(document).ready, along with a few other enhancements.
+date:        2013-02-21 16:11:03
+title:       Version 0.2.2 - Adding as many js files from CDN as possible
+subtitle:    Seeing if I can run fully on CDN delivered javascripts
 
 mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
@@ -63,13 +63,15 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   color: rgba(26, 26, 26, 1.000);
 }
 .legend-instructions {
-  margin: 0 0 1px 0;
+  margin: 10px 17px 11px 17px;
   color: rgba(26, 26, 26, 1.000);
   font: 600 25px Raleway, sans-serif;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 1), 1px 2px 18px rgba(0, 0, 0, .2);
 }
 
 .legend-header {
+  padding: 0;
+  margin: 0;
   text-align: right;
   color: rgba(26, 26, 26, 1.000);
   font: 700 30px Raleway, sans-serif;
@@ -77,7 +79,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 }
 
 .legend-sub-header {
-  margin: 0;
+  margin: 16px 0 5px 66px;
   padding: 0;
   text-align: right;
   color: rgba(128, 128, 128, 1.000);
@@ -85,7 +87,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 }
 
 .leaflet-top.leaflet-right .leaflet-control {
-  padding: 20px 30px 22px 30px;
+  padding: 10px 13px 11px 13px;
 }
 
 .leaflet-top.leaflet-right .leaflet-control ul {
@@ -94,31 +96,69 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   list-style-type: none;
 }
 
+.leaflet-top.leaflet-right .leaflet-control ul li {
+  background-color: rgba(0, 0, 0, .050);
+  height: 30px;
+  margin: 5px 0 0 0;
+  clear: both;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child {
+  height: auto;
+  background-color: none;
+  margin: 0;
+}
+
+.map-data-property-label {
+  font-family: Raleway, sans-serif;
+  float: left;
+  padding: 5px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(104, 104, 104, 1.000);
+  white-space: nowrap;
+}
+
+.map-data-property-value {
+  color: rgba(26, 26, 26, 1.000);
+  float: right;
+  padding: 5px 5px;
+  font: 700 17px Arial, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .5), 1px 2px 15px rgba(0, 0, 0, .4);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-label {
+  display: none;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value {
+  float: right;
+  border-bottom: 1px solid rgba(209, 209, 209, 1.000);
+  padding: 0 0 10px 0;
+  margin: 0 0 18px 0;
+  text-align: right;
+  color: rgba(26, 26, 26, 1.000);
+  font: 700 30px Raleway, sans-serif;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1), 1px 2px 23px rgba(0, 0, 0, .2);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value:after {
+  content: " County";
+}
 
 </style>
-
-<p>
-  This map is generated from data in this Google Docs Spreasheet:<br />
-  <a href="https://docs.google.com/spreadsheet/pub?key=0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE&output=html">https://docs.google.com/spreadsheet/pub?key=0AhLWjwzZgPNGdEFib2pYeVg1VEU5U0w0MXV5Y254NlE&output=html</a>
-</p>
-
-<!-- These are shims for IE6,7,8 and the like "lesser-browsers" -->
-<script src="{{site.baseurl}}/js/es5-shim.min.js"></script>
-<script src="{{site.baseurl}}/js/json2.js"></script>
-
-<!-- used for javascript mustache templating -->
-<script src="{{site.baseurl}}/js/mustache.js"></script>
-
-<!-- You must set the height of the div for the map, yes this should be in an external file -->
-<div id="map_test_1"></div>
-
-<script src="{{site.baseurl}}/js/tabletop.js"></script>
-<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
+<script src="//raw.github.com/jsoma/tabletop/master/src/tabletop.js"></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
 <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
 <![endif]-->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
+<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<div id="map_test_1"></div>
 <script type="text/javascript">
 
   // This should probably change to a jQuery on.doc.load thing...
@@ -221,9 +261,8 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     sheetHeaders.forEach( function(sheetHeader, sheetHeaderIndex){
       if (sheetHeader.machineReadable !== geoJSONHeaderName) {
         controlPannel_clickState += "<li>" +
-          '<span class="map-data-property label">' + sheetHeader.humanReadable + "</span>" +
-          ": " +
-          '<span class="map-data-property value">' + "{u{" + sheetHeader.machineReadable + "}u}" + "</span>" +
+          '<span class="map-data-property-label">' + sheetHeader.humanReadable + ": </span>" +
+          '<span class="map-data-property-value">' + "{u{" + sheetHeader.machineReadable + "}u}" + "</span>" +
           "</li>";
       }
     });
@@ -427,6 +466,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
         polygonHasFocus = false;
         geojson.resetStyle(lastClickedLayer);
         info.update();
+        legend.update();
         geoJSONLayers.forEach(function(thisLayer, layerArrayIndex) {
           geojson.resetStyle(thisLayer);
         });

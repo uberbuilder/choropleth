@@ -2,9 +2,9 @@
 layout:      test
 categories:  tests
 comments:    false
-date:        2013-02-21 12:58:53
-title:       Version 0.2.0 - Small optimizations
-subtitle:    Use jQuery's $(document).ready, along with a few other enhancements.
+date:        2013-02-21 14:50:42
+title:       Version 0.2.1 - Hunger Coalition
+subtitle:    Hunger Coalition's Brand Specific Styles
 
 mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
@@ -63,7 +63,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   color: rgba(26, 26, 26, 1.000);
 }
 .legend-instructions {
-  margin: 0 0 1px 0;
+  margin: 10px 17px 11px 17px;
   color: rgba(26, 26, 26, 1.000);
   font: 600 25px Raleway, sans-serif;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 1), 1px 2px 18px rgba(0, 0, 0, .2);
@@ -85,7 +85,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 }
 
 .leaflet-top.leaflet-right .leaflet-control {
-  padding: 20px 30px 22px 30px;
+  padding: 10px 13px 11px 13px;
 }
 
 .leaflet-top.leaflet-right .leaflet-control ul {
@@ -94,6 +94,55 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   list-style-type: none;
 }
 
+.leaflet-top.leaflet-right .leaflet-control ul li {
+  background-color: rgba(0, 0, 0, .050);
+  height: 30px;
+  margin: 5px 0 0 0;
+  clear: both;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child {
+  height: auto;
+  background-color: none;
+  margin: 0;
+}
+
+.map-data-property-label {
+  font-family: Raleway, sans-serif;
+  float: left;
+  padding: 5px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(104, 104, 104, 1.000);
+  white-space: nowrap;
+}
+
+.map-data-property-value {
+  color: rgba(26, 26, 26, 1.000);
+  float: right;
+  padding: 5px 5px;
+  font: 700 17px Arial, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .5), 1px 2px 15px rgba(0, 0, 0, .4);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-label {
+  display: none;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value {
+  float: right;
+  border-bottom: 1px solid rgba(209, 209, 209, 1.000);
+  padding: 0 0 10px 0;
+  margin: 0 0 18px 0;
+  text-align: right;
+  color: rgba(26, 26, 26, 1.000);
+  font: 700 30px Raleway, sans-serif;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1), 1px 2px 23px rgba(0, 0, 0, .2);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value:after {
+  content: " County";
+}
 
 </style>
 
@@ -113,12 +162,13 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 <div id="map_test_1"></div>
 
 <script src="{{site.baseurl}}/js/tabletop.js"></script>
-<script type="text/javascript" src="{{site.baseurl}}/js/us-states.js"></script>
+
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
 <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
 <![endif]-->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
 <script type="text/javascript">
 
   // This should probably change to a jQuery on.doc.load thing...
@@ -221,9 +271,8 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     sheetHeaders.forEach( function(sheetHeader, sheetHeaderIndex){
       if (sheetHeader.machineReadable !== geoJSONHeaderName) {
         controlPannel_clickState += "<li>" +
-          '<span class="map-data-property label">' + sheetHeader.humanReadable + "</span>" +
-          ": " +
-          '<span class="map-data-property value">' + "{u{" + sheetHeader.machineReadable + "}u}" + "</span>" +
+          '<span class="map-data-property-label">' + sheetHeader.humanReadable + ": </span>" +
+          '<span class="map-data-property-value">' + "{u{" + sheetHeader.machineReadable + "}u}" + "</span>" +
           "</li>";
       }
     });
@@ -427,6 +476,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
         polygonHasFocus = false;
         geojson.resetStyle(lastClickedLayer);
         info.update();
+        legend.update();
         geoJSONLayers.forEach(function(thisLayer, layerArrayIndex) {
           geojson.resetStyle(thisLayer);
         });
