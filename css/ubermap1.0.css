@@ -1,0 +1,156 @@
+/* 
+// Author: Jeremy Iglehart
+// This is a überBuilder Project: http://uberbuilder.github.com/choropleth/
+// License Available Here: http://github.com/uberbuilder/choropleth/
+//
+// --- This is a complete re-write of Code Camp project ---
+//
+// The original project idea came from the 3rd Philly Give Camp.
+// Original Project Contributors: Jeremy Iglehart, Sebastian Meine and Jennifer Voss
+// Original Project Source: https://github.com/jennvoss/gpcah-map/
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Raleway:600,400);
+
+#map_test_1 {
+  height: 500px;
+  width: 880px;
+  margin: 0 0 0 -222px;
+}
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+.uberMap-legend {
+  clear: both;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+.legend-item {
+  float: left;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  padding: .5em .25em 0em .25em;
+  font-weight: bold;
+  font-size: 1.25em;
+  opacity: 0.7;
+  margin: 0px;
+  color: black;
+}
+.polygon-has-focus .legend-item {
+  opacity: 1;
+}
+.zoomedIn .legend-item {
+  opacity: .9;
+}
+.uberMap-legend-header {
+  margin: 0 0 5px 0;
+  color: rgba(70, 70, 70, 1.000);
+  font: 400 20px Raleway, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 1), 1px 2px 16px rgba(0, 0, 0, .2);
+}
+.polygon-has-focus.uberMap-legend-header {
+  color: rgba(26, 26, 26, 1.000);
+}
+.legend-instructions {
+  margin: 10px 17px 11px 17px;
+  color: rgba(26, 26, 26, 1.000);
+  font: 600 25px Raleway, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 1), 1px 2px 18px rgba(0, 0, 0, .2);
+}
+
+.legend-header {
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  color: rgba(26, 26, 26, 1.000);
+  font: 700 30px Raleway, sans-serif;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1), 1px 2px 23px rgba(0, 0, 0, .2);
+}
+
+.legend-sub-header {
+  margin: 16px 0 5px 66px;
+  padding: 0;
+  text-align: right;
+  color: rgba(128, 128, 128, 1.000);
+  font: 400 16px Raleway, sans-serif;
+}
+
+.leaflet-top.leaflet-right .leaflet-control {
+  padding: 10px 13px 11px 13px;
+}
+
+.leaflet-control ul li {
+  background-image: none;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li {
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+  background-color: rgba(0, 0, 0, .050);
+  height: 30px;
+  margin: 5px 0 0 0;
+  clear: both;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child {
+  height: auto;
+  background-color: none;
+  margin: 0;
+}
+
+.map-data-property-label {
+  font-family: Raleway, sans-serif;
+  float: left;
+  padding: 5px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(104, 104, 104, 1.000);
+  white-space: nowrap;
+}
+
+.map-data-property-value {
+  color: rgba(26, 26, 26, 1.000);
+  float: right;
+  padding: 5px 5px;
+  font: 700 18px Arial, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .5), 1px 2px 15px rgba(0, 0, 0, .4);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-label {
+  display: none;
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value {
+  float: right;
+  border-bottom: 1px solid rgba(209, 209, 209, 1.000);
+  padding: 0 0 10px 0;
+  margin: 0 0 18px 0;
+  text-align: right;
+  color: rgba(26, 26, 26, 1.000);
+  font: 700 30px Raleway, sans-serif;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1), 1px 2px 23px rgba(0, 0, 0, .2);
+}
+
+.leaflet-top.leaflet-right .leaflet-control ul li:first-child .map-data-property-value:after {
+  content: " County";
+}

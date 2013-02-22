@@ -2,9 +2,9 @@
 layout:      test
 categories:  tests
 comments:    false
-date:        2013-02-21 16:11:03
-title:       Version 0.2.2 - Adding as many js files from CDN as possible
-subtitle:    Seeing if I can run fully on CDN delivered javascripts
+date:        2013-02-21 17:20:05
+title:       Version 0.3.0 - Completely Hacked
+subtitle:    Everything from here on is just for Hunger Coalition, this is what I have to do to make it work in their Drupal install.
 
 mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
@@ -14,7 +14,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 #map_test_1 {
   height: 500px;
   width: 880px;
-  margin: 3em 0;
+  margin: 0 0 0 -222px;
 }
 
 .info {
@@ -90,13 +90,21 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   padding: 10px 13px 11px 13px;
 }
 
+.leaflet-control ul li {
+  background-image: none;
+}
+
 .leaflet-top.leaflet-right .leaflet-control ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
+  list-style-image: none;
 }
 
 .leaflet-top.leaflet-right .leaflet-control ul li {
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
   background-color: rgba(0, 0, 0, .050);
   height: 30px;
   margin: 5px 0 0 0;
@@ -123,7 +131,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   color: rgba(26, 26, 26, 1.000);
   float: right;
   padding: 5px 5px;
-  font: 700 17px Arial, sans-serif;
+  font: 700 18px Arial, sans-serif;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, .5), 1px 2px 15px rgba(0, 0, 0, .4);
 }
 
@@ -147,17 +155,21 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 }
 
 </style>
-<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
-<script src="//raw.github.com/jsoma/tabletop/master/src/tabletop.js"></script>
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
-<!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
-<![endif]-->
-<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
 
-<!-- You must set the height of the div for the map, yes this should be in an external file -->
+<!-- These are shims for IE6,7,8 and the like "lesser-browsers" -->
+<script src="//www.hungercoalition.org/sites/hungercoalition.org/files/js/es5-shim.min.js"></script>
+<script src="//www.hungercoalition.org/sites/hungercoalition.org/files/js/json2.js"></script>
+<!-- used for javascript mustache templating -->
+<script src="//www.hungercoalition.org/sites/hungercoalition.org/files/js/mustache.js"></script>
+<!-- This is the magic begind getting data from the google spreadsheet -->
+<script src="//www.hungercoalition.org/sites/hungercoalition.org/files/js/tabletop.js"></script>
+<!-- This is the leaflet mapping library.  Thank's so much Leaflet!!! -->
+<link rel="stylesheet" href="//www.hungercoalition.org/sites/hungercoalition.org/files/css/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="//www.hungercoalition.org/sites/hungercoalition.org/files/css/leaflet.ie.css" />
+<![endif]-->
+<script type="text/javascript" src="//www.hungercoalition.org/sites/hungercoalition.org/files/js/leaflet.js"></script>
+
 <div id="map_test_1"></div>
 <script type="text/javascript">
 
@@ -188,7 +200,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     "features": []
     };
   var geojson;
-  var choroplethDataClasses = 9;
+  var choroplethDataClasses = 6;
 
   // Is in case you're using liquid layouts (in this case bundeled with Jekyll) you need to set a mustache delimiter.
   var mustacheSetDelimiter = "{{page.mustacheSetDelimiter}}";
@@ -203,6 +215,17 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   var polygonHasFocus = false;
   var lastClickedLayer;
   var geoJSONLayers = [];
+
+  // For formatting my numbers with commas (Thanks StackOverflow: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript )
+  Number.prototype.numberFormat = function(decimals, dec_point, thousands_sep) {
+    dec_point = typeof dec_point !== 'undefined' ? dec_point : '.';
+    thousands_sep = typeof thousands_sep !== 'undefined' ? thousands_sep : ',';
+
+    var parts = this.toFixed(decimals).toString().split(dec_point);
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_sep);
+
+    return parts.join(dec_point);
+  }
 
   // init() is where we actually go to the Google-Drive spreadsheet and load the data in.
   function init() {
@@ -236,23 +259,34 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
       masterGeoJSON.features[rowIndex] = JSON.parse(element[geoJSONHeaderName]).features[0];
       tabletop.sheets(sheetName).column_names.forEach(function(headerName, headerIndex) {
         if (headerName !== geoJSONHeaderName) {
-          masterGeoJSON.features[rowIndex].properties[headerName] = element[headerName];
+          if (headerName === "populationreceivingsnap") {
+            masterGeoJSON.features[rowIndex].properties[headerName] = Math.round(parseFloat(element[headerName])) + "%";
+          } else if (headerName === "foodinsecurityrate" || headerName === "childfoodinsecurityrate") {
+            masterGeoJSON.features[rowIndex].properties[headerName] = element[headerName] + "%";
+          } else {
+            masterGeoJSON.features[rowIndex].properties[headerName] = element[headerName].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
         } else {
           // Do nothing
         }
       });
-      //console.log("County Name Check: " + masterGeoJSON.features[rowIndex].properties['countyname'] + " - " + masterGeoJSON.features[rowIndex].properties['name']);
       choroplethRangeCandidate[rowIndex] = parseFloat(masterGeoJSON.features[rowIndex].properties[choroplethRangeHeaderName]);
     });
 
-    choroplethRangeHigh = Math.max.apply(null, choroplethRangeCandidate);
-    choroplethRangeLow = Math.min.apply(null, choroplethRangeCandidate);
-    choroplethRangeStep = (choroplethRangeHigh - choroplethRangeLow);
-    for (i=0;i<choroplethDataClasses;i++) {
-      choroplethRangeSteps[i] = parseFloat(choroplethRangeLow + ((choroplethRangeStep / choroplethDataClasses) * i));
-    }
+    // We used to do all this math to figure out the ranges and automatically build the legend and all that fun stuff.  We ran into some statistical display problems with the automatic iterative design of the algorithym not displaying the proper results.  So, now we just hard code is.  Good news: We get the display to work how we want it to.  Bad news: This has to be done every time you run the report.
+    // The below kruft is here if in case we need to go back to automatically calculating this.
 
-    console.log(choroplethRangeSteps);
+    //choroplethRangeHigh = Math.max.apply(null, choroplethRangeCandidate);
+    //choroplethRangeLow = Math.min.apply(null, choroplethRangeCandidate);
+    //choroplethRangeStep = (choroplethRangeHigh - choroplethRangeLow);
+
+    choroplethRangeSteps[0] = 9.7;
+    choroplethRangeSteps[1] = 11.06;
+    choroplethRangeSteps[2] = 12.43;
+    choroplethRangeSteps[3] = 13.79;
+    choroplethRangeSteps[4] = 15.16;
+    choroplethRangeSteps[5] = 20;
+
 
     //Build the mustache templates
     var legendInstructions = '<p class="legend-instructions">Choose a county below for hunger statistics.</p>'
@@ -268,13 +302,16 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
           "</li>";
       }
     });
-    controlPannel_clickState += "</ul>";
 
-    controlPannel_legend += '<p class="{u{polygonState}u} uberMap-legend-header">' + choroplethRangeHeaderName_HumanReadable + ':</p>' +
-     '<ul class="uberMap-legend {u{polygonState}u}">';
-    choroplethRangeSteps.forEach( function(rangeStep, rangeIndex) {
-      controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(rangeStep) + '">' + Math.floor(rangeStep) + '</li>';
-    });
+    controlPannel_clickState += "</ul>";
+    controlPannel_legend += '<p class="{u{polygonState}u} uberMap-legend-header">' + choroplethRangeHeaderName_HumanReadable + ':</p>';
+    controlPannel_legend += '<ul class="uberMap-legend {u{polygonState}u}">';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(0)  + '"></li>';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(11.5) + '"></li>';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(13) + '"></li>';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(15) + '"></li>';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(17) + '"></li>';
+    controlPannel_legend += '<li class="legend-item" style="background-color: ' + getColor(23) + '"></li>';
     controlPannel_legend += '</ul>';
 
     // Now that we have actually loaded all of the data from the Google-Drive spreadsheet
@@ -291,13 +328,16 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     doubleClickZoom: false
   });
 
+  map.attributionControl.setPrefix('');
+
   // This is where you get your map tiles.  You can get your own free API key from cloudmade.com
   // - please replace my key with yours if you're using this code in your own project. v
   // - please replace my key with yours if you're using this code in your own project. v
   // - please replace my key with yours if you're using this code in your own project. v
   // - please replace my key with yours if you're using this code in your own project. v
   var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+    attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade' +
+    ' &#x2014; This <a href="http://uberbuilder.github.com/choropleth/">&uuml;berBuilder Project</a> is powered by <a href="http://leafletjs.com">Leaflet</a>',
     key: 'c5007019bb4e4787afb0135c36690912',
     styleId: 86036
   }).addTo(map);
@@ -308,10 +348,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 
   // This is where we decide which colors the polygons we draw on the map will be.
   function getColor(d) {
-    return d >= choroplethRangeSteps[8]   ? '#800026' :
-           d >= choroplethRangeSteps[7]   ? '#BD0026' :
-           d >= choroplethRangeSteps[6]   ? '#E31A1C' :
-           d >= choroplethRangeSteps[5]   ? '#FC4E2A' :
+    return d >  choroplethRangeSteps[5]   ? '#FC4E2A' :
            d >= choroplethRangeSteps[4]   ? '#FD8D3C' :
            d >= choroplethRangeSteps[3]   ? '#FEB24C' :
            d >= choroplethRangeSteps[2]   ? '#FED976' :
@@ -327,7 +364,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 
   function style(feature) {
     return {
-      fillColor: getColor(feature.properties.foodinsecurityrate),
+      fillColor: getColor(parseFloat(feature.properties.foodinsecurityrate)),
       weight: 1,
       opacity: 1,
       color: 'white',
@@ -475,7 +512,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
       },
       zoomend: function() {
         if (polygonHasFocus) {
-          map.panBy([150, 0]);
+          map.panBy([200, 0]);
           geoJSONLayers.forEach(function(thisLayer, layerArrayIndex) {
             thisLayer.setStyle({
               weight: 1
@@ -488,5 +525,4 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     info.addTo(map);
     legend.addTo(map);
   }
-
 </script>
