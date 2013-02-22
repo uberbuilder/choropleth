@@ -415,7 +415,9 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
   function highlightFeature(e) {
     var layer = e.target;
 
-    if (!polygonHasFocus) {
+    if (L.Browser.touch) {
+      clickFeature(e);
+    } else if (!polygonHasFocus) {
       layer.setStyle({
         fillColor: '#78A700',
         fillOpacity: 0.9
@@ -426,9 +428,6 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
       }
 
       info.update(layer.feature.properties, "hover");
-      if (L.Browser.touch) {
-        clickFeature(e);
-      }
     }
   }
 
@@ -500,16 +499,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
 
     map.fitBounds(zoomToJSONObject.getBounds());
     map.on({
-      click: function() {
-        map.fitBounds(zoomToJSONObject.getBounds());
-        polygonHasFocus = false;
-        geojson.resetStyle(lastClickedLayer);
-        info.update();
-        legend.update();
-        geoJSONLayers.forEach(function(thisLayer, layerArrayIndex) {
-          geojson.resetStyle(thisLayer);
-        });
-      },
+      click: clickFeature,
       zoomend: function() {
         if (polygonHasFocus) {
           map.panBy([200, 0]);
@@ -525,4 +515,14 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
     info.addTo(map);
     legend.addTo(map);
   }
+
+  //unction() {
+  //      map.fitBounds(zoomToJSONObject.getBounds());
+  //      polygonHasFocus = false;
+  //      geojson.resetStyle(lastClickedLayer);
+  //      info.update();
+  //      legend.update();
+  //      geoJSONLayers.forEach(function(thisLayer, layerArrayIndex) {
+  //        geojson.resetStyle(thisLayer);
+  //      });
 </script>
